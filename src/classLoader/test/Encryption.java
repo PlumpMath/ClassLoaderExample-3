@@ -20,6 +20,7 @@ public class Encryption {
 	public Encryption(String keyFromFile,String dataFromFile){
 		this.keyFromFile = keyFromFile;
 		this.dataFromFile = dataFromFile;
+System.out.println("test");
 	}
 	public void encrypData(){
 		SecureRandom sr = new SecureRandom();	
