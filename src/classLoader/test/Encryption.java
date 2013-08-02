@@ -21,6 +21,7 @@ public class Encryption {
 		this.keyFromFile = keyFromFile;
 		this.dataFromFile = dataFromFile;
 System.out.println("test");
+System.out.println("change");
 	}
 	public void encrypData(){
 		SecureRandom sr = new SecureRandom();	
