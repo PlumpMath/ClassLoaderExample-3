@@ -1,7 +1,8 @@
 /**
  * 
  */
-package classLoader.test;
+package com.warner.loader;
+
 import java.io.*;
 import java.security.SecureRandom;
 
@@ -17,43 +18,44 @@ import javax.crypto.spec.DESKeySpec;
 public class Encryption {
 	private String keyFromFile;
 	private String dataFromFile;
-	public Encryption(String keyFromFile,String dataFromFile){
+
+	public Encryption(String keyFromFile, String dataFromFile) {
 		this.keyFromFile = keyFromFile;
 		this.dataFromFile = dataFromFile;
-System.out.println("test");
-System.out.println("change");
+		System.out.println("test");
+		System.out.println("change");
 	}
-	public void encrypData(){
-		SecureRandom sr = new SecureRandom();	
+
+	public void encrypData() {
+		SecureRandom sr = new SecureRandom();
 		try {
-			//´ÓÎÄ¼ş»ñÈ¡ÃÜÔ¿Êı¾İ
+			// ä»æ–‡ä»¶è·å–å¯†é’¥æ•°æ®
 			FileInputStream fis = new FileInputStream(new File(keyFromFile));
-			byte []rawKeyData = new byte[fis.available()];
+			byte[] rawKeyData = new byte[fis.available()];
 			fis.read(rawKeyData);
 			fis.close();
-			//´ÓÔ­Ê¼ÃÜÔ¿Êı¾İ´´½¨DESKeySpec¶ÔÏó
+			// ä»åŸå§‹å¯†é’¥æ•°æ®åˆ›å»ºDESKeySpecå¯¹è±¡
 			DESKeySpec dks = new DESKeySpec(rawKeyData);
-			//ÀûÓÃÃÜÔ¿¹¤³§£¬½«dks×ª»»³ÉÒ»¸öSecretKey¶ÔÏó
+			// åˆ©ç”¨å¯†é’¥å·¥å‚ï¼Œå°†dksè½¬æ¢æˆä¸€ä¸ªSecretKeyå¯¹è±¡
 			SecretKey key = SecretKeyFactory.getInstance("DES").generateSecret(dks);
-			//CipherÍê³ÉÊµ¼ÊµÄ¼ÓÃÜ²Ù×÷
+			// Cipherå®Œæˆå®é™…çš„åŠ å¯†æ“ä½œ
 			Cipher cipher = Cipher.getInstance("DES");
 			cipher.init(Cipher.ENCRYPT_MODE, key, sr);
-			//»ñÈ¡Òª¼ÓÃÜµÄÊı¾İÎÄ¼ş
+			// è·å–è¦åŠ å¯†çš„æ•°æ®æ–‡ä»¶
 			FileInputStream fi = new FileInputStream(new File(dataFromFile));
-			byte []data = new byte[fi.available()];
+			byte[] data = new byte[fi.available()];
 			fi.read(data);
 			fi.close();
-			//Ö´ĞĞ¼ÓÃÜ²Ù×÷
-			byte []encryptionData = cipher.doFinal(data);
-			//½«¼ÓÃÜºóµÄÊı¾İĞ´»ØÎÄ¼ş
+			// æ‰§è¡ŒåŠ å¯†æ“ä½œ
+			byte[] encryptionData = cipher.doFinal(data);
+			// å°†åŠ å¯†åçš„æ•°æ®å†™å›æ–‡ä»¶
 			FileOutputStream fos = new FileOutputStream(new File(dataFromFile));
 			fos.write(encryptionData);
 			fos.close();
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
 }

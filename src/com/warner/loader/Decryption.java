@@ -1,4 +1,4 @@
-package classLoader.test;
+package com.warner.loader;
 
 import java.io.*;
 import java.security.SecureRandom;
@@ -11,44 +11,41 @@ import javax.crypto.spec.DESKeySpec;
 public class Decryption {
 	private String keyFromFile;
 	private String dataFromFile;
-	public Decryption(String keyFromFile,String dataFromFile){
+
+	public Decryption(String keyFromFile, String dataFromFile) {
 		this.keyFromFile = keyFromFile;
 		this.dataFromFile = dataFromFile;
 	}
-	public void decryptionData(){
-		try{
+
+	public void decryptionData() {
+		try {
 			SecureRandom sr = new SecureRandom();
-			//´ÓÎÄ¼ş»ñÈ¡ÃÜÔ¿Êı¾İ
+			// ä»æ–‡ä»¶è·å–å¯†é’¥æ•°æ®
 			FileInputStream fis = new FileInputStream(new File(keyFromFile));
-			byte []rawKeyData = new byte[fis.available()];
+			byte[] rawKeyData = new byte[fis.available()];
 			fis.read(rawKeyData);
 			fis.close();
-			//´ÓÔ­Ê¼ÃÜÔ¿Êı¾İ´´½¨DESKeySpec¶ÔÏó
+			// ä»åŸå§‹å¯†é’¥æ•°æ®åˆ›å»ºDESKeySpecå¯¹è±¡
 			DESKeySpec dks = new DESKeySpec(rawKeyData);
-			//ÀûÓÃÃÜÔ¿¹¤³§£¬½«dks×ª»»³ÉÒ»¸öSecretKey¶ÔÏó
+			// åˆ©ç”¨å¯†é’¥å·¥å‚ï¼Œå°†dksè½¬æ¢æˆä¸€ä¸ªSecretKeyå¯¹è±¡
 			SecretKey key = SecretKeyFactory.getInstance("DES").generateSecret(dks);
-			//CipherÍê³ÉÊµ¼ÊµÄ½âÃÜ²Ù×÷
+			// Cipherå®Œæˆå®é™…çš„è§£å¯†æ“ä½œ
 			Cipher cipher = Cipher.getInstance("DES");
 			cipher.init(Cipher.DECRYPT_MODE, key, sr);
-			//»ñÈ¡Òª½âÃÜµÄÊı¾İÎÄ¼ş
+			// è·å–è¦è§£å¯†çš„æ•°æ®æ–‡ä»¶
 			FileInputStream fi = new FileInputStream(new File(dataFromFile));
-			byte []data = new byte[fi.available()];
+			byte[] data = new byte[fi.available()];
 			fi.read(data);
 			fi.close();
-			//Ö´ĞĞ½âÃÜ²Ù×÷
-			byte []decryptionData = cipher.doFinal(data);
-			//½«½âÃÜºóµÄÊı¾İĞ´»ØÎÄ¼ş
+			// æ‰§è¡Œè§£å¯†æ“ä½œ
+			byte[] decryptionData = cipher.doFinal(data);
+			// å°†è§£å¯†åçš„æ•°æ®å†™å›æ–‡ä»¶
 			FileOutputStream fos = new FileOutputStream(new File(dataFromFile));
 			fos.write(decryptionData);
 			fos.close();
-			
-		}
-		catch(Exception e){
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
-	
-
 }
