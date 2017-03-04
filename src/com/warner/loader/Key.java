@@ -23,6 +23,7 @@ public class Key {
 		// 获取密钥数据
 		byte[] rawKeyData = sk.getEncoded();
 		// 将获取到的密钥保存到文件中，待解密时使用
+		System.out.println(new File(keyName).getAbsolutePath());
 		FileOutputStream fo = new FileOutputStream(new File(keyName));
 		fo.write(rawKeyData);
 	}
