@@ -11,16 +11,12 @@ public class MyClassLoaderTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		Key myKey = new Key("key.txt");
-		try {
-			myKey.createKey();
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		/*
-		 * 
-		 * DataClass dc = new DataClass(); dc.showMsg();
-		 */
+		// Key myKey = new Key("key.txt");
+		// try {
+		// myKey.createKey();
+		// } catch (Exception e) {
+		// System.out.println(e.toString());
+		// }
 
 		// String keyFile = "key.txt";
 		// String dataFile =
@@ -50,7 +46,7 @@ public class MyClassLoaderTest {
 			// dc.showMsg("Test");
 			Method[] methodList = myClass.getMethods();
 			for (Method item : methodList) {
-				// System.out.println(item.getName());
+				System.out.println(item.getName());
 			}
 			Object oc = myClass.newInstance();
 			// getMethod的两个参数：第一个表示方法的名称，第二个表示方法的参数
